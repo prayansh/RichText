@@ -20,7 +20,7 @@ public class BlockTextTest {
 
     @Test
     public void testFormattingCustom() {
-        TextFormat text = new BlockText().blockWidth(new int[]{3, 3, 4}).delimiter("-")
+        TextFormat text = new BlockText().blockWidth(3,3,4).delimiter("-")
                 .setText("7803181058");
         assertEquals("780-318-1058", text.getFormattedText());
     }
