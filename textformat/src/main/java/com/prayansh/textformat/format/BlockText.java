@@ -1,7 +1,5 @@
 package com.prayansh.textformat.format;
 
-import java.util.ArrayList;
-
 /**
  * Created by Prayansh on 16-07-16.
  */
