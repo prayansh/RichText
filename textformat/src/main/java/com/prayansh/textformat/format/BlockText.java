@@ -22,8 +22,12 @@ public class BlockText extends TextFormat {
         }
     }
 
-    public BlockText blockWidth(int[] blockWidth) {
-        this.blockWidth = blockWidth;
+    public BlockText blockWidth(int width1,int... widths) {
+        blockWidth = new int[1 + widths.length];
+        blockWidth[0] = width1;
+        for(int i=1;i<blockWidth.length;i++){
+            blockWidth[i] = widths[i-1];
+        }
         return this;
     }
 
