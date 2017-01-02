@@ -1,5 +1,6 @@
 package com.prayansh.textformat.formats;
 
+import com.prayansh.textformat.actions.LetterCaseAction;
 import com.prayansh.textformat.utils.ActionPair;
 import com.prayansh.textformat.utils.ActionPriority;
 import com.prayansh.textformat.actions.PrefixAction;
@@ -17,9 +18,10 @@ import java.util.List;
 public class TextFormat implements Iterable<AbstractTextAction> {
     private List<ActionPair<Integer, AbstractTextAction>> actions;
     private int priorityCount;
+    private int afterCount;
 
     public TextFormat() {
-        priorityCount = 0;
+        priorityCount = afterCount = 0;
         actions = new ArrayList<>();
     }
 
@@ -44,12 +46,14 @@ public class TextFormat implements Iterable<AbstractTextAction> {
     public TextFormat addAction(AbstractTextAction action, ActionPriority priority) {
         switch (priority) {
             case PREFIX:
-            case AFTER:
             case SUFFIX:
-                actions.add(new ActionPair<Integer, AbstractTextAction>(priority.getPriority(), action));
+                actions.add(new ActionPair<>(priority.getPriority(), action));
+                break;
+            case AFTER:
+                actions.add(new ActionPair<>(priority.getPriority() + afterCount++, action));
                 break;
             case NORMAL:
-                actions.add(new ActionPair<Integer, AbstractTextAction>(priorityCount++, action));
+                actions.add(new ActionPair<>(priorityCount++, action));
                 break;
         }
         return this;
@@ -71,6 +75,14 @@ public class TextFormat implements Iterable<AbstractTextAction> {
 
     public TextFormat suffix(String suffix) {
         return addAction(new SuffixAction(suffix), ActionPriority.SUFFIX);
+    }
+
+    public TextFormat uppercase() {
+        return addAction(new LetterCaseAction(0));
+    }
+
+    public TextFormat lowercase() {
+        return addAction(new LetterCaseAction(1));
     }
 
     public List<ActionPair<Integer, AbstractTextAction>> getActions() {

@@ -19,6 +19,8 @@ public class BlockFormatAction implements StringTextAction {
         StringBuilder result = new StringBuilder();
         int letter = 0;
         for (int i = 0; i < blockWidths.length; i++) {
+            if (letter == s.length())
+                break;
             for (int j = 0; j < blockWidths[i]; j++) {
                 result.append(s.charAt(letter++));
             }
