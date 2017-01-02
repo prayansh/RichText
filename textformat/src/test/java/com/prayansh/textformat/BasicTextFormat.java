@@ -1,5 +1,7 @@
 package com.prayansh.textformat;
 
+import com.prayansh.textformat.formats.TextFormat;
+
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -10,33 +12,27 @@ import static junit.framework.Assert.assertEquals;
 public class BasicTextFormat {
 
     @Test
-    public void testPrefix() {
-        TextFormat text = new TextFormat().prefix("pre").setRawText("123456789").build();
-        assertEquals("pre123456789", text.getFormattedText());
+    public void testMoneyFormat() {
+        TextFormat text = new TextFormat().prefix("$");
+        assertEquals("$23.09", RichText.apply(text, "23.09"));
     }
 
     @Test
-    public void testSuffix() {
-        TextFormat text = new TextFormat().suffix("end").setRawText("7803181058").build();
-        assertEquals("7803181058end", text.getFormattedText());
+    public void testEmailFormat() {
+        TextFormat text = new TextFormat().suffix("@gmail.com");
+        assertEquals("xyz@gmail.com", RichText.apply(text, "xyz"));
     }
 
     @Test
-    public void testAnchor() {
-        TextFormat text = new TextFormat()
-                .addAnchor(3, "mid")
-                .setRawText("7803181058")
-                .build();
-        assertEquals("7803mid181058", text.getFormattedText());
+    public void test() {
+        TextFormat text = new TextFormat().prefix("pre").suffix("end");
+        assertEquals("pre7803181058end", RichText.apply(text, "7803181058"));
     }
 
+
     @Test
-    public void testAnchorMultiple() {
-        TextFormat text = new TextFormat()
-                .addAnchor(3, "mid")
-                .addAnchor(5, "mid")
-                .setRawText("7803181058")
-                .build();
-        assertEquals("7803mid18mid1058", text.getFormattedText());
+    public void test2() {
+        TextFormat text = new TextFormat().suffix("end").prefix("pre");
+        assertEquals("pre7803181058end", RichText.apply(text, "7803181058"));
     }
 }
